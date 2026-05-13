@@ -20,6 +20,8 @@ The best model is selected using the lowest validation loss and evaluated using 
 | LSTM | 5.139 | 6.784 |
 | Naive Baseline | 10.032 | 13.988 |
 
+The LSTM model outperformed the naive baseline, reducing MAE from 10.032 to 5.139.
+
 ## How to Run
 
 ```powershell
