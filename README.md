@@ -15,7 +15,7 @@ The best model is selected using the lowest validation loss and evaluated using 
 
 ## Dataset
 
-Dataset source:  
+Dataset source: Kaggle - AQI Jakarta, Hanoi, Bangkok, Kuala Lumpur  
 https://www.kaggle.com/datasets/yasirabd/aqi-jakarta-hanoi-bangkok-kuala-lumpur/data
 
 This project uses the Bangkok air quality data.
