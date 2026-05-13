@@ -13,6 +13,20 @@ to predict the next PM2.5 value.
 
 The best model is selected using the lowest validation loss and evaluated using MAE and RMSE.
 
+## Dataset
+
+Dataset source:  
+https://www.kaggle.com/datasets/yasirabd/aqi-jakarta-hanoi-bangkok-kuala-lumpur/data
+
+This project uses the Bangkok air quality data.
+
+After removing rows with missing PM2.5 or PM10 values, the usable data period is:
+
+- Start date: 2016-07-30
+- End date: 2020-12-06
+- Original rows: 2,528
+- Cleaned rows: 1,578
+
 ## Results
 
 | Model | MAE | RMSE |
