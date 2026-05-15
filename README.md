@@ -77,3 +77,28 @@ python train.py
 # Run confidence interval analysis
 python confidence_interval.py
 ```
+
+## Experiment Summary
+
+| Model | Best Epoch | Best Val Loss | Best Val MAE | Test MAE | Test RMSE |
+|---|---:|---:|---:|---:|---:|
+| Vanilla LSTM | 47 | 0.00351 | 0.04324 | 5.139 | 6.784 |
+| Improved LSTM Dense-Tanh | 44 | 0.00328 | 0.04122 | 4.718 | 6.337 |
+
+The improved LSTM Dense-Tanh model achieved lower validation loss and lower test error than the vanilla LSTM.
+
+Compared with the vanilla LSTM:
+
+- MAE improved from 5.139 to 4.718
+- RMSE improved from 6.784 to 6.337
+- MAE improvement: 8.15%
+- RMSE improvement: 6.60%
+
+Detailed experiment outputs are saved in:
+
+```text
+outputs/vanilla_lstm/
+outputs/improved_lstm_dense_tanh/
+saved_models/vanilla_lstm/
+saved_models/improved_lstm_dense_tanh/
+```
