@@ -12,7 +12,8 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 from tensorflow.keras.callbacks import ModelCheckpoint, CSVLogger
 
-from model import build_lstm_model
+# from model import build_lstm_model
+from model_improve import build_lstm_model
 
 
 CSV_PATH = "data/bangkok-air-quality.csv"
@@ -24,6 +25,9 @@ SEED = 42
 FEATURE_COLUMNS = ["pm25", "pm10"]
 TARGET_COLUMN = "pm25"
 
+EXPERIMENT_NAME = "improved_lstm_dense_tanh_dropout50"
+MODEL_DIR = os.path.join("saved_models", EXPERIMENT_NAME)
+OUTPUT_DIR = os.path.join("outputs", EXPERIMENT_NAME)
 
 os.environ["PYTHONHASHSEED"] = str(SEED)
 np.random.seed(SEED)
@@ -52,8 +56,11 @@ def inverse_pm25(scaler, values, n_features):
 
 
 def main():
-    os.makedirs("saved_models", exist_ok=True)
-    os.makedirs("outputs", exist_ok=True)
+    # os.makedirs("saved_models", exist_ok=True)
+    # os.makedirs("outputs", exist_ok=True)
+
+    os.makedirs(MODEL_DIR, exist_ok=True)
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     # =========================
     # 1) Load and clean dataset
@@ -122,7 +129,7 @@ def main():
 
     model.summary()
 
-    with open("outputs/model_summary.txt", "w", encoding="utf-8") as f:
+    with open(os.path.join(OUTPUT_DIR, "model_summary.txt"), "w", encoding="utf-8") as f:
         model.summary(print_fn=lambda x: f.write(x + "\n"))
 
     # =========================
@@ -130,13 +137,13 @@ def main():
     # =========================
     callbacks = [
         ModelCheckpoint(
-            filepath="saved_models/best_lstm_pm25_model.keras",
+            filepath=os.path.join(MODEL_DIR, "best_lstm_pm25_model.keras"),
             monitor="val_loss",
             save_best_only=True,
             mode="min",
             verbose=1
         ),
-        CSVLogger("outputs/training_history.csv")
+        CSVLogger(os.path.join(OUTPUT_DIR, "training_history.csv"))
     ]
 
     # =========================
@@ -153,12 +160,14 @@ def main():
         verbose=1
     )
 
-    model.save("saved_models/final_lstm_pm25_model.keras")
+    model.save(os.path.join(MODEL_DIR, "final_lstm_pm25_model.keras"))
 
     # =========================
     # 6) Load best model for test evaluation
     # =========================
-    best_model = tf.keras.models.load_model("saved_models/best_lstm_pm25_model.keras")
+    best_model = tf.keras.models.load_model(
+        os.path.join(MODEL_DIR, "best_lstm_pm25_model.keras")
+    )
 
     y_pred = best_model.predict(X_test)
 
@@ -227,11 +236,11 @@ def main():
     # =========================
     # 10) Save scaler
     # =========================
-    joblib.dump(scaler, "saved_models/pm25_scaler.pkl")
+    joblib.dump(scaler, os.path.join(MODEL_DIR, "pm25_scaler.pkl"))
 
-    print("Best model saved to: saved_models/best_lstm_pm25_model.keras")
-    print("Final model saved to: saved_models/final_lstm_pm25_model.keras")
-    print("Scaler saved to: saved_models/pm25_scaler.pkl")
+    print(f"Best model saved to: {os.path.join(MODEL_DIR, 'best_lstm_pm25_model.keras')}")
+    print(f"Final model saved to: {os.path.join(MODEL_DIR, 'final_lstm_pm25_model.keras')}")
+    print(f"Scaler saved to: {os.path.join(MODEL_DIR, 'pm25_scaler.pkl')}")
 
     # =========================
     # 11) Save metrics/details JSON
@@ -262,20 +271,23 @@ def main():
         "test_naive_mae": float(naive_mae),
         "test_naive_rmse": float(naive_rmse),
         "result": result_text,
-        "best_model_path": "saved_models/best_lstm_pm25_model.keras",
-        "final_model_path": "saved_models/final_lstm_pm25_model.keras",
-        "scaler_path": "saved_models/pm25_scaler.pkl",
-        "training_history_path": "outputs/training_history.csv",
-        "prediction_csv_path": "outputs/test_predictions.csv",
-        "prediction_plot_path": "outputs/pm25_prediction_plot.png",
-        "loss_plot_path": "outputs/loss_plot.png",
-        "model_summary_path": "outputs/model_summary.txt"
+        "experiment_name": EXPERIMENT_NAME,
+        "best_model_path": os.path.join(MODEL_DIR, "best_lstm_pm25_model.keras"),
+        "final_model_path": os.path.join(MODEL_DIR, "final_lstm_pm25_model.keras"),
+        "scaler_path": os.path.join(MODEL_DIR, "pm25_scaler.pkl"),
+        "training_history_path": os.path.join(OUTPUT_DIR, "training_history.csv"),
+        "prediction_csv_path": os.path.join(OUTPUT_DIR, "test_predictions.csv"),
+        "prediction_plot_path": os.path.join(OUTPUT_DIR, "pm25_prediction_plot.png"),
+        "loss_plot_path": os.path.join(OUTPUT_DIR, "loss_plot.png"),
+        "model_summary_path": os.path.join(OUTPUT_DIR, "model_summary.txt")
     }
 
-    with open("outputs/metrics.json", "w", encoding="utf-8") as f:
+    metrics_path = os.path.join(OUTPUT_DIR, "metrics.json")
+
+    with open(metrics_path, "w", encoding="utf-8") as f:
         json.dump(details, f, indent=4, ensure_ascii=False)
 
-    print("Metrics/details saved to: outputs/metrics.json")
+    print(f"Metrics/details saved to: {metrics_path}")
 
     # =========================
     # 12) Save predictions CSV
@@ -295,9 +307,11 @@ def main():
 
     print(prediction_df.head(20))
 
-    prediction_df.to_csv("outputs/test_predictions.csv", index=False)
+    prediction_csv_path = os.path.join(OUTPUT_DIR, "test_predictions.csv")
 
-    print("Predictions saved to: outputs/test_predictions.csv")
+    prediction_df.to_csv(prediction_csv_path, index=False)
+
+    print(f"Predictions saved to: {prediction_csv_path}")
 
     # =========================
     # 13) Plot actual vs predicted
@@ -311,7 +325,7 @@ def main():
     plt.xlabel("Test Time Step")
     plt.ylabel("PM2.5")
     plt.tight_layout()
-    plt.savefig("outputs/pm25_prediction_plot.png", dpi=300)
+    plt.savefig(os.path.join(OUTPUT_DIR, "pm25_prediction_plot.png"), dpi=300)
     plt.show()
 
     # =========================
@@ -330,7 +344,7 @@ def main():
     plt.xlabel("Epoch")
     plt.ylabel("MSE Loss")
     plt.tight_layout()
-    plt.savefig("outputs/loss_plot.png", dpi=300)
+    plt.savefig(os.path.join(OUTPUT_DIR, "loss_plot.png"), dpi=300)
     plt.show()
 
 

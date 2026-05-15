@@ -1,0 +1,47 @@
+{
+    "project": "PM2.5 Forecasting using LSTM",
+    "dataset_path": "data/bangkok-air-quality.csv",
+    "target": "next_day_pm25",
+    "features": [
+        "pm25",
+        "pm10"
+    ],
+    "window_size": 7,
+    "epochs": 50,
+    "batch_size": 32,
+    "seed": 42,
+    "original_rows": 2528,
+    "cleaned_rows": 1578,
+    "dropped_rows": 950,
+    "start_date": "2016-07-30 00:00:00",
+    "end_date": "2020-12-06 00:00:00",
+    "train_feature_rows": 1262,
+    "test_feature_rows_with_context": 323,
+    "x_train_shape": [
+        1255,
+        7,
+        2
+    ],
+    "x_test_shape": [
+        316,
+        7,
+        2
+    ],
+    "best_epoch": 44,
+    "best_val_loss": 0.0032786838710308075,
+    "best_val_mae": 0.04121986776590347,
+    "test_lstm_mae": 4.71849338962001,
+    "test_lstm_rmse": 6.336910154312204,
+    "test_naive_mae": 10.031645569620252,
+    "test_naive_rmse": 13.988240992917921,
+    "result": "LSTM is better than naive baseline based on MAE.",
+    "experiment_name": "improved_lstm_dense_tanh",
+    "best_model_path": "saved_models\\improved_lstm_dense_tanh\\best_lstm_pm25_model.keras",
+    "final_model_path": "saved_models\\improved_lstm_dense_tanh\\final_lstm_pm25_model.keras",
+    "scaler_path": "saved_models\\improved_lstm_dense_tanh\\pm25_scaler.pkl",
+    "training_history_path": "outputs\\improved_lstm_dense_tanh\\training_history.csv",
+    "prediction_csv_path": "outputs\\improved_lstm_dense_tanh\\test_predictions.csv",
+    "prediction_plot_path": "outputs\\improved_lstm_dense_tanh\\pm25_prediction_plot.png",
+    "loss_plot_path": "outputs\\improved_lstm_dense_tanh\\loss_plot.png",
+    "model_summary_path": "outputs\\improved_lstm_dense_tanh\\model_summary.txt"
+}

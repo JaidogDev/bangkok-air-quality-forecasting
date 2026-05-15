@@ -1,0 +1,20 @@
+Vanilla LSTM
+------------
+MAE  mean: 5.1393
+MAE  95% CI: [4.6504, 5.6408]
+RMSE mean: 6.7742
+RMSE 95% CI: [6.1359, 7.4233]
+
+Improved LSTM
+-------------
+MAE  mean: 4.7190
+MAE  95% CI: [4.2571, 5.2004]
+RMSE mean: 6.3269
+RMSE 95% CI: [5.6863, 6.9888]
+
+Improvement: Improved vs Vanilla
+--------------------------------
+MAE improvement mean: 8.15%
+MAE improvement 95% CI: [2.81%, 13.29%]
+RMSE improvement mean: 6.60%
+RMSE improvement 95% CI: [1.95%, 11.34%]

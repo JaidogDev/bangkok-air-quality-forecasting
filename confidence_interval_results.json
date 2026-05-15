@@ -1,0 +1,30 @@
+{
+    "vanilla_lstm": {
+        "mae_mean": 5.139276931995646,
+        "mae_ci_lower": 4.650410239698506,
+        "mae_ci_upper": 5.6408170944846034,
+        "rmse_mean": 6.774226588893385,
+        "rmse_ci_lower": 6.135866106975115,
+        "rmse_ci_upper": 7.423332964285536
+    },
+    "improved_lstm": {
+        "mae_mean": 4.719025145267136,
+        "mae_ci_lower": 4.257058324595719,
+        "mae_ci_upper": 5.200386571455334,
+        "rmse_mean": 6.326865809475119,
+        "rmse_ci_lower": 5.686312528059482,
+        "rmse_ci_upper": 6.988801426410865
+    },
+    "improvement_percent": {
+        "mae_improvement_mean_percent": 8.146515884879962,
+        "mae_improvement_ci_lower_percent": 2.81457202670801,
+        "mae_improvement_ci_upper_percent": 13.28773272152608,
+        "rmse_improvement_mean_percent": 6.595327844203153,
+        "rmse_improvement_ci_lower_percent": 1.9501277941537576,
+        "rmse_improvement_ci_upper_percent": 11.339739696397952
+    },
+    "n_bootstraps": 10000,
+    "seed": 42,
+    "vanilla_prediction_path": "outputs/test_predictions.csv",
+    "improved_prediction_path": "outputs/improved_lstm_dense_tanh/test_predictions.csv"
+}
