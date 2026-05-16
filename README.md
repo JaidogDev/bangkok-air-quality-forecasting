@@ -59,6 +59,17 @@ Bootstrap 95% confidence intervals were computed to evaluate whether the improve
 
 Since both improvement confidence intervals are positive, the improved LSTM shows a meaningful reduction in error compared with the vanilla LSTM.
 
+## Result Interpretation
+
+The improved LSTM Dense-Tanh model shows better forecasting performance than the vanilla LSTM.  
+From the prediction plot, the vanilla LSTM tends to produce smoother predictions and may underreact when PM2.5 values rapidly increase or decrease. This behavior suggests that the vanilla model may be too limited in representing nonlinear changes in the time-series pattern.
+
+The improved model adds a Dense hidden layer with 16 units and `tanh` activation after the LSTM layer. This additional nonlinear transformation helps the model refine the temporal representation learned by the LSTM before producing the final PM2.5 prediction.
+
+Quantitatively, the improved model reduced MAE from **5.139** to **4.718**, which is an **8.15% improvement**. It also reduced RMSE from **6.784** to **6.337**, which is a **6.60% improvement**. The reduction in RMSE is important because RMSE penalizes large errors more strongly, meaning the improved model is better at reducing larger prediction mistakes.
+
+To evaluate whether the improvement is consistent, bootstrap 95% confidence intervals were computed. The MAE improvement confidence interval is **[2.81%, 13.29%]**, and the RMSE improvement confidence interval is **[1.95%, 11.34%]**. Since both intervals remain positive, the result supports that the improved LSTM provides a meaningful reduction in prediction error compared with the vanilla LSTM.
+
 ## How to Run
 
 ```powershell
