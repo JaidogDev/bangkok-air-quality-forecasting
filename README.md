@@ -113,3 +113,6 @@ outputs/improved_lstm_dense_tanh/
 saved_models/vanilla_lstm/
 saved_models/improved_lstm_dense_tanh/
 ```
+<img width="3000" height="1500" alt="image" src="https://github.com/user-attachments/assets/78b769f5-f039-4ef3-875f-27dbfae2950f" />
+
+<img width="3600" height="1500" alt="image" src="https://github.com/user-attachments/assets/f17fef76-01cc-4622-bc7a-ce4596c563d9" />
