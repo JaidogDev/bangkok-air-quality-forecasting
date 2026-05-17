@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project predicts next-day PM2.5 levels in Bangkok using LSTM-based time-series models trained on public historical air quality data.
+This project is a machine learning time-series forecasting project that predicts next-day PM2.5 levels in Bangkok using LSTM-based models trained on public historical air quality data.
 
 The model uses the previous 7 daily records of:
 
